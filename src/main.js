@@ -7,16 +7,39 @@ app.use(express.json());
 let books = [{
   id: 1,
   title: "Omniscient Reader's Viewpoint",
-  description: "Greatest novel book."
+  author: "sing N song",
+  genre: "action",
+  borrowed: false
 }];
 
+// Get all the books
 app.get("/books", (_req, res) => {
   res.json(books);
 });
 
+// Get specific book by its id; return error status if the books is not found
 app.get("/books/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const book = books.find((b) => b.id === id);
   if (!book) return res.status(404).json({ error: "Book not found." });
   res.json(book);
+});
+
+// Post a new book; checks that the request fulfills the requirements
+app.post("/books", (req, res) => {
+  const {title, author, genre} = req.body;
+  if (!title) return res.status(400).json({ error: "Title is required." });
+  if (!author) return res.status(400).json({ error: "Author is required." });
+  if (!genre) return res.status(400).json({ error: "Genre is required." });
+
+  const newBook = {
+    id: books.length + 1,
+    title,
+    author,
+    genre,
+    borrowed: false
+  }
+
+  books.push(newBook);
+  res.status(201).json(newBook);
 });
