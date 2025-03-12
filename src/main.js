@@ -77,3 +77,13 @@ app.delete("/books/:id", (req, res) => {
   const deletedBook = books.splice(bookIndex, 1);
   res.status(200).json(deletedBook);
 });
+
+// Global error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Internal Server Error." });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
