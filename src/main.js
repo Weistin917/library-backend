@@ -67,3 +67,13 @@ app.patch("/books/:id/borrow", (req, res) => {
   book.borrowed = !book.borrowed;
   res.status(200).json({ message: (book.borrowed) ? "Book borrowed." : "Book returned", book});
 });
+
+// Delete a book by id; return error status if the book is not found
+app.delete("/books/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const bookIndex = books.findIndex((b) => b.id === id);
+  if (bookIndex < 0) return res.status(404).json({ error: "Book not found." });
+
+  const deletedBook = books.splice(bookIndex, 1);
+  res.status(200).json(deletedBook);
+});
