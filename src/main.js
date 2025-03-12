@@ -38,8 +38,23 @@ app.post("/books", (req, res) => {
     author,
     genre,
     borrowed: false
-  }
+  };
 
   books.push(newBook);
   res.status(201).json(newBook);
+});
+
+// Update a book's information; if any field is not given, the old value is kept
+app.put("/books/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const book = books.find((b) => b.id === id);
+  if (!book) return res.status(404).json({ error: "Book not found." });
+
+  const {title, author, genre, borrowed} = req.body;
+
+  book.title = title || book.title;
+  book.author = author || book.author;
+  book.genre = genre || book.genre;
+  book.borrowed = borrowed || book.borrowed;
+  res.status(200).json(newBook);
 });
