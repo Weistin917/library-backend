@@ -12,6 +12,10 @@ let books = [{
   borrowed: false
 }];
 
+app.get("/", (_req, res) => {
+  res.send("Root");
+});
+
 // Get all the books
 app.get("/books", (_req, res) => {
   res.json(books);
@@ -55,7 +59,7 @@ app.put("/books/:id", (req, res) => {
   book.title = title || book.title;
   book.author = author || book.author;
   book.genre = genre || book.genre;
-  res.status(200).json(newBook);
+  res.status(200).json(book);
 });
 
 // Set the book as borrowed or returned
