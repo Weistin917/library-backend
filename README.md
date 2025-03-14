@@ -2,6 +2,8 @@
 Small practice using Express.js for a simple library backend implementation.
 
 ## Live preview at CodeSandbox
+https://898pzn-3000.csb.app/books  
+Note that the server needs to be running in order to preview.
 
 ## Installation requirements
 This project works with Node.js and Express.js. To install Express.js dependencies, execute the following command inside the project directory (library-backend):
